@@ -1,4 +1,4 @@
-package atm.main;
+package atm_project.main;
 
 import java.io.FileReader;
 import java.io.IOException;
