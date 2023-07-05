@@ -17,7 +17,7 @@ public abstract class AbstractChase extends ATM{
 
     @Override
     public void turnOn() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 2; i++) {
 
             System.out.println("ATM booting up...");
             try {
@@ -49,7 +49,7 @@ public abstract class AbstractChase extends ATM{
             if (each.getPin() == pin){
                 Data.currentAccount = each;
                 System.out.println("Logged in");
-                break;
+                return;
             } else {
                 throw new InvalidPinEnxception();
             }
@@ -94,6 +94,7 @@ public abstract class AbstractChase extends ATM{
     @Override
     public double deposit(double amount) {
         System.out.println("Adding $ "+ amount + " into " + Data.currentAccount.getBalance());
+        Data.currentAccount.updateBalance(amount);
         return Data.currentAccount.getBalance();
     }
 
@@ -126,29 +127,46 @@ public abstract class AbstractChase extends ATM{
             return;
         }
 
-        System.out.println("1) Check Balance\n2)Deposit\n3)Withdraw\n4)Transfer\n5)Logout");
+        System.out.println("1)Check Balance\n2)Deposit\n3)Withdraw\n4)Transfer\n5)Logout");
 
-        switch (input.nextInt()){
-            case 1:
-                System.out.println(checkBalance());
-                break;
-            case 2:
-                System.out.println("How much to deposit");
-                deposit(input.nextDouble());
-                break;
-            case 3:
-                System.out.println("How much to withdraw");
-                withdraw(input.nextDouble());
-                break;
-            case 4:
-                System.out.println("Which account to transfer and how much to transfer");
-                transfer(input.nextLong(), input.nextDouble());
-                break;
-            case 5:
-                logout();
-            default:
-                System.out.println("Not a valid option, Try again");
+        boolean loggedIn = true;
+
+        while (loggedIn) {
+            System.out.println("Enter your choice:");
+            System.out.println("1. Check Balance");
+            System.out.println("2. Deposit");
+            System.out.println("3. Withdraw");
+            System.out.println("4. Transfer");
+            System.out.println("5. Logout");
+
+            int choice = input.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.println(checkBalance());
+                    break;
+                case 2:
+                    System.out.println("How much to deposit");
+                    deposit(input.nextDouble());
+                    break;
+                case 3:
+                    System.out.println("How much to withdraw");
+                    withdraw(input.nextDouble());
+                    break;
+                case 4:
+                    System.out.println("Which account to transfer and how much to transfer");
+                    transfer(input.nextLong(), input.nextDouble());
+                    break;
+                case 5:
+                    logout();
+                    loggedIn = false; // Set loggedIn to false to exit the loop
+                    break;
+                default:
+                    System.out.println("Not a valid option, Try again");
+            }
         }
+
+
 
 
     }
