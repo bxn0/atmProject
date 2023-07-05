@@ -15,6 +15,9 @@ public class Account {
         this.pin = pin;
     }
 
+    public void updateBalance(double money){ balance+=money; }
+
+
     public String getUsername() {
         return username;
     }

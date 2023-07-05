@@ -21,9 +21,11 @@ public abstract class ATM implements Machine, MoneyFunctions {
         return powerOn;
     }
 
+    public void setPowerOn(boolean powerOn) {
+        this.powerOn = powerOn;
+    }
 
-
-   public abstract void interfaceMenu(Scanner input);
+    public abstract void interfaceMenu(Scanner input);
     public abstract void login(String username, int pin);
     public abstract void logout();
 }
